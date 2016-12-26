@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.IStudentDao">
+<select id="selectStudent" resultType="com.test.pojo.Student">
+SELECT s.studentId , s.`name`,s.age,s.sex,s.courseId,c.CourseName,c.TeacherName,c.sksj
+FROM tb_student AS s
+INNER JOIN tb_course AS c
+ON s.courseId =c.courseId;
+</select>
+
+<delete id="delStudentById" parameterType="java.util.Map">
+delete from tb_student
+where studentId=#{id}
+</delete>
+
+<insert id="addStudent" parameterType="com.test.pojo.Student" >
+insert into tb_student
+(studentId,name,sex,age,courseId)
+values(#{studentId},#{name},#{sex},#{age},#{courseId})
+</insert>
+
+<update id="updateStudentByName" parameterType="com.test.pojo.Student">
+update tb_student set name=#{name},age=#{age},courseId=#{courseId}
+where studentId=#{studentId}
+</update>
+
+<update id="updataName"  parameterType="java.util.Map">
+	update tb_student set name=#{newname}
+	where name=#{oldname}
+
+</update>
+
+<select id="selectByAge" resultType="com.test.pojo.Student" parameterType="com.test.pojo.Student">
+SELECT s.studentId , s.`name`,s.age,s.sex,c.CourseName,c.TeacherName,c.sksj
+FROM tb_student AS s
+INNER JOIN tb_course AS c
+ON s.courseId =c.courseId
+WHERE s.age>#{age};
+</select>
+
+<select id="getStudentById" resultType="com.test.pojo.Student" parameterType="com.test.pojo.Student">
+SELECT *
+FROM tb_student
+WHERE studentId=#{studentId} 
+</select>
+
+</mapper>
